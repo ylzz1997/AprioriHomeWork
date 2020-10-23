@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by lhy on 2020/9/14.
@@ -14,6 +15,14 @@ public class Main {
     public static FileUtil fileUtil = new FileUtil();
     public static AHCA ahca;
     public static void main(String[] args) {
+        System.out.println("请输入节点分支数量与每一个节点所包含的候选集数量，两个数值请使用空格隔开：");
+        Scanner s = new Scanner(System.in);
+        if(s.hasNext()){
+            NODE_NUM=s.nextInt();
+        }
+        if(s.hasNext()){
+            LIST_NUM=s.nextInt();
+        }
         List<String> CI = fileUtil.read();
         List<CandidateItem> LC = fileUtil.toCandidateItem(CI);
         CANDIDATE_NUM = LC.get(0).getContent().size();
@@ -28,6 +37,7 @@ public class Main {
         for(Transaction t:LT){
             TransactionMarchSession session = new TransactionMarchSession(aht,t);
             session.start();
+            System.out.println("比对路径");
             session.printTrail();
         }
         aht.printTreeStruct();
